@@ -26,8 +26,13 @@ namespace ariel {
         if (a > max) {
             throw out_of_range("invalid input");
         }
-           
-        array<string, num_string> hat { "_===_", " ___\n .....", "  _\n  /_\\", " ___\n (_*_)" }; // 0
+        
+        /**
+         * Building the snowman
+         * Left number in comments: Place in snowman numbers according to (HNLRXYTB)
+         * Right number in comments: Line in the printed snowman (0, 1, 2, 3, 4)
+         */
+        array<string, num_string> hat { "_===_", " ___\n .....", "  _\n  /_\\", " ___\n (_*_)" }; // 0 - 0
         array<string, num_string> nose { ",", ".", "_", " " }; // 1 - 1
         array<string, num_string> left_eye { "(.", "(o", "(O", "(-" }; // 2 - 1
         array<string, num_string> right_eye { ".)", "o)", "O)", "-)" }; // 3 - 1
@@ -49,47 +54,48 @@ namespace ariel {
             tmp = tmp / mod;
             count++;
         }
-        if (count != max_snowman) {
-            throw invalid_argument("Wrong number of digits");
+        if (count != max_snowman) { // count should be 8
+            throw length_error("Wrong number of digits");
         }
         
-        string snowman = " ";
+        string snowman = " "; // Init the snowman
 
-        snowman.append(hat.at(index.at(0)-1) + "\n");
+        snowman.append(hat.at(index.at(0)-1) + "\n"); // Appending part 0
 
-        if (index.at(left_hand) == problematic_num) {
+        if (index.at(left_hand) == problematic_num) { // Check if left_arm should be at part 1
             snowman.append(left_arm.at(index.at(left_hand)-1));
         } else {
             snowman.append(" ");
         }
 
+        // Appending part 1
         snowman.append(left_eye.at(index.at(2)-1) + nose.at(index.at(1)-1) + right_eye.at(index.at(3)-1));
 
-        if (index.at(right_hand) == problematic_num) {
+        if (index.at(right_hand) == problematic_num) { // Check if right_arm should be at part 1
             snowman.append(right_arm.at(index.at(right_hand)-1) + "\n");
         } else {
             snowman.append("\n");
         }
         
-        if (index.at(left_hand) != problematic_num) {
+        if (index.at(left_hand) != problematic_num) { // Check if left_arm should be at part 2
             snowman.append(left_arm.at(index.at(left_hand)-1));
         } else {
             snowman.append(" ");
         }
 
-        snowman.append(torso.at(index.at(stomach)-1));
+        snowman.append(torso.at(index.at(stomach)-1)); // Appending part 2
 
-        if (index.at(right_hand) != problematic_num) {
+        if (index.at(right_hand) != problematic_num) { // Check if right_arm should be at part 2
             snowman.append(right_arm.at(index.at(right_hand)-1) + "\n");
         } else {
             snowman.append("\n");
         }
 
-        snowman.append(base.at(index.at(bottom)-1));
+        snowman.append(base.at(index.at(bottom)-1)); // Appending part 3
         
 
-        cout << "________________________" << endl;
-        cout << snowman << endl;
+        // cout << "________________________" << endl;
+        // cout << snowman << endl;
         return snowman;
     }
 }
